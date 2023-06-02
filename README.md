@@ -21,7 +21,7 @@ A la omisión del resto de cifras significativas se le conoce como **error de re
 
 ## Análisis de errores
 El término error puede definirse como la inexactitud y/o imprecisión en las predicciones, en el supuesto de que conozcamos el valor verdadero al que queremos llegar los errores pueden definirse de la siguiente manera.
-- Error absoluto: (completar)
+- Error absoluto: (completar)$$ p - p $$
 - Error relativo: (completar)
 - Error porcentual: (completar)
 
