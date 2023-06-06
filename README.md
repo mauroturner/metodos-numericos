@@ -3,7 +3,7 @@ Los métodos numéricos son aquellas técnicas y algoritmos para resolver proble
 
 ## Cifras significativas
 
-### ¿Qué son?
+### ¿Qué es?
 Las cifras significativas son dígitos de un número que consideramos no nulos. **(No es lo mismo que cantidad de decimales)**.
 
 ### Objetivo
