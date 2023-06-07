@@ -21,23 +21,28 @@ A la omisión del resto de cifras significativas se le conoce como **error de re
 
 ## Análisis de errores
 El término error puede definirse como la inexactitud y/o imprecisión en las predicciones, en el supuesto de que conozcamos el valor verdadero al que queremos llegar los errores pueden definirse de la siguiente manera.
-- Error absoluto: (completar)
-- Error relativo: (completar)
-- Error porcentual: (completar)
+- Error absoluto: ![equation](https://latex.codecogs.com/svg.image?e&space;=&space;\left|&space;\widetilde{p}&space;-&space;p&space;\right|) 
+- Error relativo: ![equation](https://latex.codecogs.com/svg.image?e&space;=&space;\left|&space;\frac{&space;\widetilde{p}&space;-&space;p&space;}{p}&space;\right|)
+- Error porcentual: ![equation](https://latex.codecogs.com/svg.image?e&space;=&space;\left|&space;\frac{&space;\widetilde{p}&space;-&space;p&space;}{p}&space;\right|&space;\cdot&space;100)
 
+donde ![equation](https://latex.codecogs.com/svg.image?\widetilde{p})  es una aproximación del valor real
 ## Análisis de errores en métodos iterativos
 En los métodos iterativos siempre vamos a hacer el supuesto de que el valor obtenido en la siguiente ejecución será una mejor aproximación al valor real.
-- Error absoluto: (completar)
-- Error relativo: (completar)
+- Error absoluto: ![equation](https://latex.codecogs.com/svg.image?e&space;=&space;\left|&space;\widetilde{p}_{n&plus;1}&space;-&space;p_{n}&space;\right|)
+- Error relativo: ![equation](https://latex.codecogs.com/svg.image?e&space;=&space;\left|&space;\frac{\widetilde{p}_{n&plus;1}&space;-&space;p_{n}}{\widetilde{p}_{n&plus;1}}&space;\right|)
 
 ### Criterio de parada
 Una de las preguntas que surge cuando se emplean métodos iterativos, es: **¿Cuándo es suficiente una aproximación?** En ese sentido, siempre dependerá del contexto del problema. Sin embargo, nosotros definiremos un criterio conservador para obtener tantas cifras significativas.
-En este caso diremos que **p** es una mejor aproximación a **p** con **d** cifras significativas, si **d** es el mayor número natural que verifique (completar)
+En este caso diremos que **p** es una mejor aproximación a **p** con **d** cifras significativas, si **d** es el mayor número natural que verifique 
+
+
+![equation](https://latex.codecogs.com/svg.image?E_{r}&space;=&space;\frac{\left|&space;\widetilde{p}&space;-&space;p&space;\right|}{\left|&space;\widetilde{p}&space;\right|}&space;\leq&space;0.5&space;\cdot&space;10^{-d})
 
 ## Métodos cerrados
 Son aquellos métodos que aprovechan el hecho de que una función cambia de signo en la vecindad de una raíz. A estas técnicas se les llama métodos cerrados, o de intervalos, porque se necesita de dos valores iniciales para la raíz. Como su nombre lo indica, dichos valores iniciales deben “encerrar”, o estar a ambos lados de la raíz.
-(Adjuntar imagen de ejemplo)
 
+
+![image](https://i.imgur.com/E8sAHFA.png)
 ### Método de bisección
 El método de bisección es un método numérico utilizado para encontrar la raíz de una función en un intervalo dado. El método se basa en el teorema de Bolzano, que establece que si una función es continua en un intervalo y los valores de la función en los extremos del intervalo tienen signos opuestos, entonces existe al menos una raíz en ese intervalo.
 (insertar imagen de ejemplo)
