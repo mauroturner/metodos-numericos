@@ -41,11 +41,10 @@ En este caso diremos que **p** es una mejor aproximación a **p** con **d** cifr
 ## Métodos cerrados
 Son aquellos métodos que aprovechan el hecho de que una función cambia de signo en la vecindad de una raíz. A estas técnicas se les llama métodos cerrados, o de intervalos, porque se necesita de dos valores iniciales para la raíz. Como su nombre lo indica, dichos valores iniciales deben “encerrar”, o estar a ambos lados de la raíz.
 
+<img src="https://i.imgur.com/E8sAHFA.png" alt="image" style="width:200px;height:200px;">
 
-![image](https://i.imgur.com/E8sAHFA.png)
 ### Método de bisección
 El método de bisección es un método numérico utilizado para encontrar la raíz de una función en un intervalo dado. El método se basa en el teorema de Bolzano, que establece que si una función es continua en un intervalo y los valores de la función en los extremos del intervalo tienen signos opuestos, entonces existe al menos una raíz en ese intervalo.
-(insertar imagen de ejemplo)
 
 #### Criterio de parada
 El error en el k-ésimo paso estará dado por la expresión 
@@ -199,7 +198,34 @@ if __name__ == '__main__':
 ```
 
 ## Métodos abiertos
-Son aquellos métodos que  se basan en fórmulas que requieren únicamente de un solo valor de inicio x o que empiecen con un par de ellos, pero que no necesariamente encierran la raíz. Éstos, algunas veces divergen o se alejan de la raíz verdadera a medida que se avanza en el cálculo. Sin embargo, cuando los métodos abiertos convergen, en general lo hacen mucho más rápido que los métodos cerrados. (Adjuntar imagen de ejemplo)
+Son aquellos métodos que  se basan en fórmulas que requieren únicamente de un solo valor de inicio x o que empiecen con un par de ellos, pero que no necesariamente encierran la raíz. Éstos, algunas veces divergen o se alejan de la raíz verdadera a medida que se avanza en el cálculo. Sin embargo, cuando los métodos abiertos convergen, en general lo hacen mucho más rápido que los métodos cerrados.
+
+<img src="https://i.imgur.com/WdI6bqf.png" alt="image" style="width:200px;height:200px;">
+
+### Iteración del punto fijo
+El método de iteración del punto fijo implica tomar un valor inicial y aplicar repetidamente una fórmula o función específica a ese valor para acercarse cada vez más a la solución deseada.
+
+- Sea g: [a,b] -> R continuamente derivable, tal que g(x) pertenece a [a,b] para toda x perteneciente a [a,b]. Entonces, g tiene un punto fijo x* en [a,b]
+- Si g'(x) existe en [a,b] y existe una constante positiva k < 1 con |g′(x)| ≤ k, para toda x perteneciente (a,b); entonces el punto fijo x* en [a,b] es único.
+- Además, se puede acortar el error de la iteración n-ésima por (Para N > 2):
+
+
+![equation](https://latex.codecogs.com/svg.image?\left|&space;x_{n}&space;-&space;x^{*}&space;\right|&space;\leq&space;\frac{k^{n}}{1&space;-&space;k}&space;\cdot&space;\left|&space;x_{1}&space;-&space;x_{2}\right|)
+
+
+### Comportamiento
+En la práctica, si la derivada de g es continua, sucede que:
+- Si: |g’(x)| > 1 entonces los iterados no convergen a x*
+- Si: |g’(x)| < 1 entonces los iterados no convergen linealmente a x*
+- Si: |g’(x)| = 1 entonces los iterados convergen cuadráticamente a x*
+
+### Algoritmo
+1. Hacer de f(x) = 0 a x = g(x) mediante un desarrollo algebraico. Esta ecuación se puede “acomodar” de varias maneras por lo tanto vamos a tener varios x = g(x).
+2. Derivar las g(x) y evaluar en todas, la semilla. Para obtener una semilla se puede resolver la desigualdad −1 ≤ g′(x) ≤ 1. Analizar la convergencia según la tabla anterior. También se puede analizar el gráfico y ver el cambio de signo de la función
+3. Establecer un criterio de parada
+
+
+
 
 ## Bibliografía
 - Chapra, S. C., & Canale, R. P. (2010). Métodos numéricos para ingenieros (5a ed.). México: McGrawHill.
