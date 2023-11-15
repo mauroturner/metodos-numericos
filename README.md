@@ -200,8 +200,8 @@ Son aquellos métodos que  se basan en fórmulas que requieren únicamente de un
 
 <img src="https://i.imgur.com/WdI6bqf.png" alt="image" style="width:200px;height:200px;">
 
-### Iteración del punto fijo
-El método de iteración del punto fijo implica tomar un valor inicial y aplicar repetidamente una fórmula o función específica a ese valor para acercarse cada vez más a la solución deseada.
+### Iteración de punto fijo
+El método de iteración de punto fijo implica tomar un valor inicial y aplicar repetidamente una fórmula o función específica a ese valor para acercarse cada vez más a la solución deseada.
 
 - Sea g: [a,b] -> R continuamente derivable, tal que g(x) pertenece a [a,b] para toda x perteneciente a [a,b]. Entonces, g tiene un punto fijo x* en [a,b]
 - Si g'(x) existe en [a,b] y existe una constante positiva k < 1 con |g′(x)| ≤ k, para toda x perteneciente (a,b); entonces el punto fijo x* en [a,b] es único.
@@ -270,7 +270,81 @@ def main():
         
         raise ValueError('El método no converge en el número máximo de iteraciones.')
     
-    # Aplicamos el método del punto fijo a la función j(x)
+    # Aplicamos el método de punto fijo a la función j(x)
+    x0 = 1
+    tolerancia = cifras_significativas(2)
+    max_iter = 10
+    
+    try:
+        raiz, iteraciones = punto_fijo(j, x0, tolerancia, max_iter)
+        print(f"Raíz: {raiz}")
+        print(f"Número de iteraciones: {iteraciones}")
+    except ValueError as e:
+        print(e)
+
+if __name__ == '__main__':
+    main()
+```
+
+### Método de Newton - Raphson
+Esta técnica es una versión mejorada del método del punto fijo y es bastante popular. Se destaca por avanzar más rápido hacia la raíz, a veces duplicando la cantidad de dígitos exactos en cada intento, siempre y cuando se cumplan ciertas condiciones.
+
+Hablando de manera sencilla, partiendo de una estimación Xn​, para la siguiente aproximación Xn+1​, simplemente seguimos la tangente de la curva hasta que cruza el eje x en el punto (Xn, Xn+1). 
+
+### Algoritmo
+1. Seleccionar un punto inicial x0​ cerca de la raíz.
+2. En cada iteración, calcula el valor Xn+1 con la fórmula:
+![equation](https://latex.codecogs.com/svg.image?&space;x_{nueva}=x_{anterior}-\frac{f(x_{anterior})}{f'(x_{anterior})})
+
+#### Desarrollo en Python
+Para la función ![equation](https://latex.codecogs.com/svg.image?x^2-cos(x)-1) con una raíz en [1, 2] con una precisión de ![equation](https://latex.codecogs.com/svg.image?\varepsilon_r<10^-5)
+
+```python
+import numpy as np
+
+def main():
+    # Definimos la función para la cual queremos aproximar la raíz
+    def f(x):
+        return (np.exp(1) ** x) - 4 + x
+    
+    # Convertimos f(x) a x = g(x)
+    # Opción 1
+    def g(x):
+        return 4 - (np.exp(1) ** x)
+    
+    # Opción 2
+    def h(x):
+        return (np.exp(1) ** x) - 4 + 2 * x
+    
+    # Opción 3
+    def j(x):
+        return np.log(4 - x)
+    
+    # Establecemos el intervalo de la función
+    a = 1
+    b = 2
+
+    # Establecemos el criterio de parada
+    def cifras_significativas(d):
+        return (1/2) * (10**-d)
+    
+    def punto_fijo(funcion, x0, tolerancia, max_iter):
+        x = x0
+        iteraciones = 0
+        
+        while iteraciones < max_iter:
+            x_nueva = funcion(x)
+            
+            # Verificamos el criterio de parada
+            if np.abs(x_nueva - x) < tolerancia:
+                return x_nueva, iteraciones
+            
+            x = x_nueva
+            iteraciones += 1
+        
+        raise ValueError('El método no converge en el número máximo de iteraciones.')
+    
+    # Aplicamos el método de punto fijo a la función j(x)
     x0 = 1
     tolerancia = cifras_significativas(2)
     max_iter = 10

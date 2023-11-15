@@ -44,11 +44,8 @@ def main():
     
     # Aplicamos el método del punto fijo a la función j(x)
     x0 = 1
-    tolerancia = cifras_significativas(2)
-    max_iter = 10
-    
     try:
-        raiz, iteraciones = punto_fijo(j, x0, tolerancia, max_iter)
+        raiz, iteraciones = punto_fijo(j, x0, cifras_significativas(2), 10)
         print(f"Raíz: {raiz}")
         print(f"Número de iteraciones: {iteraciones}")
     except ValueError as e:
