@@ -360,5 +360,72 @@ if __name__ == '__main__':
     main()
 ```
 
+### Método de la secante
+Hay funciones cuyas derivadas son un verdadero dolor de cabeza para calcular, ahí es donde entra en juego este método (¡No se necesita calcular derivadas!). 
+
+Este método necesita dos valores iniciales de x. Sin embargo, no es necesario que la función f(x) cambie de signo entre esos dos valores. Por eso, no lo llamamos un método cerrado.
+
+### Algoritmo
+1. Seleccionar dos valores iniciales x0​ y x1​ que estén cerca de la raíz.
+2. Evaluar la función en f(x0) y f(x1)
+3. Calcular la pendiente m con
+
+![equation](https://latex.codecogs.com/svg.image?\frac{f(x_1)-f(x_0)}{x_1-x_0})
+
+4. Calcular el nuevo valor de x con la fórmula:
+
+![equation](https://latex.codecogs.com/svg.image?x_{nueva}=x_{1}-\frac{f(x_{1})}{m})
+
+#### Desarrollo en Python
+Para la función ![equation](https://latex.codecogs.com/svg.image?x^2-cos(x)-1) con una raíz en [-1, -2] con una precisión de ![equation](https://latex.codecogs.com/svg.image?\varepsilon_r<10^-5)
+
+```python
+import numpy as np
+
+def main():
+    # Definimos la función para la cual queremos aproximar la raíz
+    def f(x):
+        return (x**2) - np.cos(x) - 1
+    
+    def derivada_f(x):
+        return 2*x + np.sin(x)
+    
+    # Establecemos el intervalo de la función
+    a = 1
+    b = 2
+
+    # Establecemos el criterio de parada
+    def cifras_significativas(d):
+        return (1/2) * (10**-d)
+    
+    def newton_raphson(funcion, derivada, x0, tolerancia, max_iter):
+        x = x0
+        iteraciones = 0
+        
+        while iteraciones < max_iter:
+            x_nueva = x - funcion(x) / derivada(x)
+            
+            # Verificamos el criterio de parada
+            if np.abs(x_nueva - x) < tolerancia:
+                return x_nueva, iteraciones
+            
+            x = x_nueva
+            iteraciones += 1
+        
+        raise ValueError("El método no converge en el número máximo de iteraciones.")
+    
+    # Aplicamos el método de Newton Raphson a f(x)
+    x0 = 1.5
+    try:
+        raiz, iteraciones = newton_raphson(f, derivada_f, x0, cifras_significativas(5), 10)
+        print(f"Raíz encontrada: {raiz}")
+        print(f"Iteraciones: {iteraciones}")
+    except ValueError as e:
+        print(e)
+
+if __name__ == '__main__':
+    main()
+```
+
 ## Bibliografía
 - Chapra, S. C., & Canale, R. P. (2010). Métodos numéricos para ingenieros (5a ed.). México: McGrawHill.
