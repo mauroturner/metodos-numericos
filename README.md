@@ -69,7 +69,6 @@ Donde ![equation](https://latex.codecogs.com/svg.image?\alpha) es la tolerancia
 Para la función  ![equation](https://latex.codecogs.com/svg.image?&space;f(x)&space;=&space;x^{2}&space;-&space;cos(x)&space;-&space;1)  en el intervalo [1, 2] con una precisión de cuatro cifras significativas
 
 ```python
-import matplotlib.pyplot as plt
 import numpy as np
 
 def main():
@@ -148,8 +147,7 @@ Donde ![equation](https://latex.codecogs.com/svg.image?\alpha) es la tolerancia
 #### Desarrollo en Python
 Para la función  ![equation](https://latex.codecogs.com/svg.image?f(x)&space;=&space;x&space;\cdot&space;sen(x)&space;-&space;1)  en el intervalo [0, 2] con una precisión de cuatro cifras significativas
 
-```
-import matplotlib.pyplot as plt
+```python
 import numpy as np
 
 def main():
@@ -224,8 +222,69 @@ En la práctica, si la derivada de g es continua, sucede que:
 2. Derivar las g(x) y evaluar en todas, la semilla. Para obtener una semilla se puede resolver la desigualdad −1 ≤ g′(x) ≤ 1. Analizar la convergencia según la tabla anterior. También se puede analizar el gráfico y ver el cambio de signo de la función
 3. Establecer un criterio de parada
 
+#### Desarrollo en Python
+Para la función ![equation](https://latex.codecogs.com/svg.image?&space;f(x)=e^x-4&plus;x&space;) con una raíz en [1, 2] con una precisión de ![equation](https://latex.codecogs.com/svg.image?\varepsilon_r<10^-2)
 
+```python
+import numpy as np
 
+def main():
+    # Definimos la función para la cual queremos aproximar la raíz
+    def f(x):
+        return (np.exp(1) ** x) - 4 + x
+    
+    # Convertimos f(x) a x = g(x)
+    # Opción 1
+    def g(x):
+        return 4 - (np.exp(1) ** x)
+    
+    # Opción 2
+    def h(x):
+        return (np.exp(1) ** x) - 4 + 2 * x
+    
+    # Opción 3
+    def j(x):
+        return np.log(4 - x)
+    
+    # Establecemos el intervalo de la función
+    a = 1
+    b = 2
+
+    # Establecemos el criterio de parada
+    def cifras_significativas(d):
+        return (1/2) * (10**-d)
+    
+    def punto_fijo(funcion, x0, tolerancia, max_iter):
+        x = x0
+        iteraciones = 0
+        
+        while iteraciones < max_iter:
+            x_nueva = funcion(x)
+            
+            # Verificamos el criterio de parada
+            if np.abs(x_nueva - x) < tolerancia:
+                return x_nueva, iteraciones
+            
+            x = x_nueva
+            iteraciones += 1
+        
+        raise ValueError('El método no converge en el número máximo de iteraciones.')
+    
+    # Aplicamos el método del punto fijo a la función j(x)
+    x0 = 1
+    tolerancia = cifras_significativas(2)
+    max_iter = 10
+    
+    try:
+        raiz, iteraciones = punto_fijo(j, x0, tolerancia, max_iter)
+        print(f"Raíz: {raiz}")
+        print(f"Número de iteraciones: {iteraciones}")
+    except ValueError as e:
+        print(e)
+
+if __name__ == '__main__':
+    main()
+```
 
 ## Bibliografía
 - Chapra, S. C., & Canale, R. P. (2010). Métodos numéricos para ingenieros (5a ed.). México: McGrawHill.
