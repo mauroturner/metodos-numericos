@@ -548,5 +548,113 @@ def main():
 if __name__ == '__main__':
     main()
 ```
+
+# Método de Bairstow
+El Método de Bairstow es un algoritmo iterativo utilizado para encontrar las raíces de polinomios de segundo o mayor grado. Este método es especialmente eficiente para polinomios con coeficientes reales y complejos.
+La idea principal detrás del Método de Bairstow es realizar una factorización cuadrática sucesiva del polinomio original, reduciéndolo gradualmente hasta que se obtengan las raíces finales. Se inicia con una suposición de las raíces y luego se ajustan iterativamente para obtener una mejor aproximación.
+
+### Algoritmo
+
+1. Se tiene una ecuación de la forma ![equation](https://latex.codecogs.com/svg.image?f_{n}(x)=a_0&plus;a_1x&plus;a_2x^{2}&plus;...&plus;a_nx^n)
+
+2. Se divide entre el factor x - t, residuo R = B0
+
+3. Se calculan los coeficientes
+
+![equation](https://latex.codecogs.com/svg.image?b_n=a_n&space;)
+
+![equation](https://latex.codecogs.com/svg.image?b_{n-1}=a_{n-1}&plus;rb_{n})
+
+![equation](https://latex.codecogs.com/svg.image?b_{i}=a_{i}&plus;rb_{i&plus;1}&plus;sb_{i&plus;2}) para i = n - 2 a 0
+
+![equation](https://latex.codecogs.com/svg.image?c_n=b_n)
+
+![equation](https://latex.codecogs.com/svg.image?c_{n-1}=b_{n-1}&plus;rc_n)
+
+![equation](https://latex.codecogs.com/svg.image?c_{i}=b_{i}&plus;rc_{i&plus;1}&plus;sc_{i&plus;2}) para i = n - 2 a 1
+
+4. Se reemplazan estos datos en las ecuaciones
+
+![equation](https://latex.codecogs.com/svg.image?c_2\Delta&space;r&plus;c_3\Delta&space;s=-b_1)
+
+![equation](https://latex.codecogs.com/svg.image?c_1\Delta&space;r&plus;c_2\Delta&space;s=-b_0)
+
+5. Despejando r y s
+
+![equation](https://latex.codecogs.com/svg.image?\Delta&space;r=\frac{c_3&space;b_0-c_2&space;b_1}{c_2^2-c_1&space;c_3})
+
+![equation](https://latex.codecogs.com/svg.image?\Delta&space;s=\frac{c_1&space;b_1-c_2&space;b_0}{c_2^2-c_1&space;c_3})
+
+6. Se corrigen los nuevos valores de r y s
+
+7. Se evalúa el erorr aproximado
+
+8. Se obtienen los valores de las raíces
+
+![equation](https://latex.codecogs.com/svg.image?x=\frac{r\pm\sqrt{r^2&plus;4s}}{2})
+
+#### Desarrollo en Python
+Para la función  ![equation](https://latex.codecogs.com/svg.image?&space;x^5-3.5x^4&plus;2.75x^3&plus;2.125x^2-3.875x&plus;1.25) utilizando los valores r = s = -1 iterando hasta e = 1%
+
+```Python
+import numpy as np
+
+def main():
+    def bairstow(coeficientes, r, s, tolerancia, max_iter):
+        n = len(coeficientes) - 1
+        iteraciones = 0
+
+        while iteraciones < max_iter:
+            # Inicializamos las variables
+            b = np.zeros(n + 1)
+            c = np.zeros(n + 1)
+
+            # Calculamos los dos primeros valores para b y c
+            b[n] = coeficientes[0]
+            b[n - 1] = coeficientes[1] + (r) * b[n]
+            c[n] = b[n]
+            c[n - 1] = b[n - 1] + r * c[n]
+
+            # Calculamos el resto de valores
+            for i in range(2, n + 1):
+                b[n - i] = coeficientes[i] + (r) * b[n - i + 1] + s * b[n - i + 2]
+                c[n - i] = b[n - i] + (r) * c[n - i + 1] + s * c[n - i + 2]
+
+            # Resolvemos las ecuaciones de r y s
+            deltaR = ((c[n - 2] * b[n - 5]) - (c[n - 3] * b[n - 4])) / ((c[n - 3]**2) - (c[n - 4] * c[n - 2]))
+            deltaS = ((c[n - 4] * b[n - 4]) - (c[n - 3] * b[n - 5])) / ((c[n - 3]**2) - (c[n - 4] * c[n - 2]))
+            r = r + deltaR 
+            s = s + deltaS
+
+            errorR = np.abs(deltaR / r) * 100
+            errorS = np.abs(deltaS / s) * 100
+
+            # Verificamos el criterio de parada
+            if errorR < tolerancia and errorS < tolerancia:
+                # Calculamos las raíces
+                x1 = (r + np.sqrt((r**2) + 4 * s)) / 2
+                x2 = (r - np.sqrt((r**2) + 4 * s)) / 2
+                return r, s, x1, x2 
+
+            iteraciones += 1
+
+        raise ValueError("El método no converge en el número máximo de iteraciones.")
+
+    # Aplicamos el método de Bairstow a f(x)
+    coeficientes = [1, -3.5, 2.75, 2.125, -3.875, 1.25]
+    r = -1
+    s = -1
+
+    try:
+        r, s, x1, x2 = bairstow(coeficientes, r, s, 1, 10)
+        print(f"r encontrado: {r}")
+        print(f"s encontrado: {s}")
+        print(f"Raíces encontradas: x1 = {x1}, x2 = {x2}")
+    except ValueError as e:
+        print(e)
+        
+if __name__ == '__main__':
+    main()
+```
 ## Bibliografía
 - Chapra, S. C., & Canale, R. P. (2010). Métodos numéricos para ingenieros (5a ed.). México: McGrawHill.
