@@ -427,5 +427,126 @@ if __name__ == '__main__':
     main()
 ```
 
+## Dos métodos especiales
+Además de los métodos que hemos programado en el repositorio, existen otras dos alternativas especiales para hallar las raíces de un polinomio, estos son:
+
+- El método de Müller
+- El método de Bairstow
+
+
+## Método de Müller
+El método de Muller es un método numérico que se asemeja al método de la secante, que aproxima una raíz mediante una línea recta trazada entre dos puntos. En el caso del método de Muller, en lugar de utilizar dos puntos, se emplean tres puntos para construir una parábola. 
+La parábola se ajusta de manera que pase por los tres puntos iniciales, y se determinan los coeficientes de la parábola.
+
+<img src="https://i.imgur.com/Rzq3Fy7.jpg" alt="image" style="width:100%;height:100%;">
+
+### Algoritmo
+1. Evaluar la función en tres puntos cercanos a la raíz 
+2. Calcular los siguientes valores
+
+![equation](https://latex.codecogs.com/svg.image?h_{0}=x_{1}-x_{0})
+
+![equation](https://latex.codecogs.com/svg.image?h_{1}=x_{12}-x_{1})
+
+![equation](https://latex.codecogs.com/svg.image?d_0=\frac{f(x_1)-f(x_0)}{h_0})
+
+![equation](https://latex.codecogs.com/svg.image?d_1=\frac{f(x_2)-f(x_1)}{h_1})
+
+![equation](https://latex.codecogs.com/svg.image?d=\frac{d_1-d_0}{h_0&plus;h_1)
+
+![equation](https://latex.codecogs.com/svg.image?b=d\cdot&space;h1&plus;d_1)
+
+![equation](https://latex.codecogs.com/svg.image?D=\sqrt{b^2-4\cdot&space;f(x_2)\cdot&space;d})
+
+
+3. Realizar las siguientes comparaciones
+
+Si | b - D | < | b + D |, entonces: E = b + D
+
+Si | b - D | > | b + D |, entonces: E = b - D
+
+4. Calcular h, x3 y la tolerancia
+
+![equation](https://latex.codecogs.com/svg.image?h=\frac{-2\cdot&space;f(x_2)}{E})
+
+![equation](https://latex.codecogs.com/svg.image?x_3=x_2&plus;h)
+
+![equation](https://latex.codecogs.com/svg.image?\left|h\right|)
+
+5. Realizar la siguiente iteración con
+
+x3 -> x2
+
+x2 -> x1
+
+x1 -> x0
+
+#### Desarrollo en Python
+Para la función ![equation](https://latex.codecogs.com/svg.image?&space;x^3-13x-12) con los valores iniciales x0, x1 y x2 = 4,5; 5,5 y 5 con una precisión de ![equation](https://latex.codecogs.com/svg.image?\varepsilon_r<10^-5)
+
+```Python
+import numpy as np
+
+def main():
+    # Definimos la función para la cual queremos aproximar la raíz
+    def f(x):
+        return (x**3) - (13*x) - 12
+
+    # Establecemos el criterio de parada
+    def cifras_significativas(d):
+        return (1/2) * (10**-d)
+    
+    def muller(funcion, x0, x1, x2, tolerancia, max_iter):
+        h0 = x1 - x0
+        h1 = x2 - x1
+        d0 = (funcion(x1) - funcion(x0)) / h0
+        d1 = (funcion(x2) - funcion(x1)) / h1
+        d = (d1 - d0) / (h0 + h1)
+        
+        iteraciones = 0
+        while iteraciones < max_iter:
+            b = (h1 * d) + d1
+            D = np.sqrt(b**2 - 4*funcion(x2)*d)
+            
+            if np.abs(b - D) < np.abs(b + D):
+                E = b + D
+            else:
+                E = b - D
+            
+            h = (-2 * funcion(x2)) / E
+            x3 = x2 + h
+            
+            if np.abs(h) < tolerancia:
+                return x3, iteraciones
+            
+            x0 = x1
+            x1 = x2
+            x2 = x3
+            
+            h0 = x1 - x0
+            h1 = x2 - x1
+            d0 = (funcion(x1) - funcion(x0)) / h0
+            d1 = (funcion(x2) - funcion(x1)) / h1
+            d = (d1 - d0) / (h0 + h1)
+            
+            iteraciones += 1
+        
+        raise ValueError("El método no converge en el número máximo de iteraciones.")
+
+    # Aplicamos el método de Muller a f(x)
+    x0 = 4.5
+    x1 = 5.5
+    x2 = 5
+    
+    try:
+        raiz, iteraciones = muller(f, x0, x1, x2, cifras_significativas(5), 10)
+        print(f"Raíz encontrada: {raiz}")
+        print(f"Iteraciones: {iteraciones}")
+    except ValueError as e:
+        print(e)
+
+if __name__ == '__main__':
+    main()
+```
 ## Bibliografía
 - Chapra, S. C., & Canale, R. P. (2010). Métodos numéricos para ingenieros (5a ed.). México: McGrawHill.
