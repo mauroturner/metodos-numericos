@@ -656,5 +656,138 @@ def main():
 if __name__ == '__main__':
     main()
 ```
+
+## Sistema de ecuaciones lineales
+Los sistemas de ecuaciones lineales son conjuntos de ecuaciones en las que cada ecuación es una función lineal de las mismas variables. Estos sistemas se puede representar de la siguiente manera:
+
+<img src="https://wikimedia.org/api/rest_v1/media/math/render/svg/4e7a71b074b0bd4839735fb1a3a6990ef81f91d2" alt="image">
+
+donde x1, x2, …, xn​ son las variables desconocidas, Aij​ son los coeficientes constantes, y Bi​ son los términos constantes en cada ecuación. Este sistema tiene m ecuaciones y n variables. Estos sistemas se pueden resolver para encontrar los valores de las variables desconocidas que satisfacen todas las ecuaciones simultáneamente.
+
+## Matrices
+Un sistema de ecuaciones lineales se puede representar de manera matricial, lo que facilita su análisis y resolución. Por ejemplo, el siguiente sistema de ecuaciones lineales con dos incógnitas, x e y:
+
+<img src="https://latex.codecogs.com/svg.image?\left\{\begin{matrix}a_{11}x&a_{12}y&=&b_{1}\\a_{21}x&a_{22}y&=&b_{2}\\\end{matrix}\right." alt="image">
+
+Se puede representar en forma matricial definiendo la matriz de coeficientes A, el vector de incógnitas X, y el vector de términos constantes B de la siguiente manera:
+
+<img src="https://latex.codecogs.com/svg.image?A=\begin{pmatrix}a_{11}&b_{12}\\a_{21}&b_{22}\\\end{pmatrix}" alt="image">
+
+<img src="https://latex.codecogs.com/svg.image?X=\begin{pmatrix}x\\y\end{pmatrix}" alt="image">
+
+<img src="https://latex.codecogs.com/svg.image?B=\begin{pmatrix}b_{1}\\b_{2}\end{pmatrix}" alt="image">
+
+Entonces, el sistema de ecuaciones se puede expresar de forma compacta como 
+
+<img src="https://latex.codecogs.com/svg.image?A\cdot&space;X=B" alt="image">
+
+Por lo tanto, la solución del sistema se encuentra multiplicando ambos lados de la ecuación por la inversa de la matriz A
+
+<img src="https://latex.codecogs.com/svg.image?X=A^{-1}\cdot&space;B&space;" alt="image">
+
+### Operaciones matriciales
+completar
+
+### Tipos especiales de matrices cuadradas
+Hay diferentes formas especiales de matrices cuadradas que son importantes y que deben mencionarse
+
+#### Matriz simétrica
+Es aquella donde 
+
+![equation](https://latex.codecogs.com/svg.image?&space;a_{ij}=a_{ji}) 
+
+para todo i y j. Por ejemplo:
+
+<img src="https://latex.codecogs.com/svg.image?\left[A\right]=\begin{pmatrix}5&1&2\\1&3&7\\2&7&8\\\end{pmatrix}" alt="image">
+
+#### Matriz diagonal
+Una matriz diagonal es una matriz cuadrada donde todos los elementos fuera de la diagonal principal son iguales a cero
+
+<img src="https://latex.codecogs.com/svg.image?\left[A\right]=\begin{pmatrix}a_{11}&&&\\&a_{22}&&\\&&a_{33}&\\&&&a_{44}\\\end{pmatrix}" alt="image">
+
+#### Matriz identidad
+Una matriz identidad es una matriz diagonal donde todos los elementos sobre la diagonal principal son iguales a 1
+
+<img src="https://latex.codecogs.com/svg.image?\left[I\right]=\begin{pmatrix}1&&&\\&1&&\\&&1&\\&&&1\\\end{pmatrix}" alt="image">
+
+#### Matriz triangular superior
+Es aquella donde todos los elementos por debajo de la diagonal principal son cero
+
+<img src="https://latex.codecogs.com/svg.image?\left[A\right]=\begin{pmatrix}a_{11}&a_{12}&a_{13}&a_{14}\\&a_{22}&a_{23}&a_{24}\\&&a_{33}&a_{34}\\&&&a_{44}\\\end{pmatrix}" alt="image">
+
+#### Matriz triangular inferior
+Es aquella donde todos los elementos por arriba de la diagonal principal son cero
+
+<img src="https://latex.codecogs.com/svg.image?\left[A\right]=\begin{pmatrix}a_{11}&&&\\a_{21}&a_{22}&&\\a_{31}&a_{32}&a_{33}&\\a_{41}&a_{42}&a_{43}&a_{44}\\\end{pmatrix}" alt="image">
+
+#### Matriz bandeada
+Es aquella que tiene todos los elementos iguales a cero, con la excepción de una banda centrada sobre la diagonal principal
+
+<img src="https://latex.codecogs.com/svg.image?\left[A\right]=\begin{pmatrix}a_{11}&a_{12}&&\\a_{21}&a_{22}&a_{23}&\\&a_{32}&a_{33}&a_{34}\\&&a_{43}&a_{44}\\\end{pmatrix}" alt="image">
+
+### Normas vectoriales
+Una norma vectorial es una función que asigna a cada vector en un espacio vectorial un número real no negativo. La norma de un vector v, generalmente denotada como ∥v∥, satisface algunas propiedades específicas, como la homogeneidad positiva, la desigualdad triangular y la identidad del triángulo
+
+#### Norma valor absoluto
+Suponiendo el vector V = (1; 3; -5; 2)
+
+![equation](https://latex.codecogs.com/svg.image?\left\|x\right\|_{1}=\sum_{i=1}^{n}\left|x_{i}\right|=1&plus;3&plus;5&plus;2=11) 
+
+#### Norma euclidea
+Suponiendo el vector V = (1; 3; -5; 2)
+
+![equation](https://latex.codecogs.com/svg.image?\left\|x\right\|_{2}=\sqrt{\left(\sum_{i=1}^{n}x_{i}^2\right)}=\sqrt{1^2&plus;3^2&plus;5^2&plus;2^2}=\sqrt{39}) 
+
+#### Norma máxima o infinita
+Suponiendo el vector V = (1; 3; -5; 2)
+
+![equation](https://latex.codecogs.com/svg.image?\left\|x\right\|_{\infty}=max\left|x_{i}\right|i=1,...,n=max\begin{Bmatrix}1;3;-5;2\end{Bmatrix}=5) 
+
+### Normas matriciales
+Al igual que con los vectores, las matrices también pueden tener asociadas diversas normas que miden de alguna manera su tamaño o magnitud
+
+#### Norma fila o infinito
+Teniendo en cuenta la matriz 
+
+<img src="https://latex.codecogs.com/svg.image?A=\begin{pmatrix}1&2&3\\4&5&0\\-1&2&-3\\\end{pmatrix}" alt="image">
+
+<img src="https://imgur.com/735aowG.png" alt="image">
+
+#### Norma columna
+<img src="https://latex.codecogs.com/svg.image?A=\begin{pmatrix}1&2&3\\4&5&0\\-1&2&-3\\\end{pmatrix}" alt="image">
+
+<img src="https://imgur.com/0x2YAh9.png" alt="image">
+
+#### Norma Frobenius
+<img src="https://latex.codecogs.com/svg.image?A=\begin{pmatrix}1&2&3\\4&5&0\\-1&2&-3\\\end{pmatrix}" alt="image">
+
+<img src="https://imgur.com/IeZYhQA.png" alt="image">
+
+## Métodos directos
+Los métodos directos para resolver sistemas de ecuaciones lineales (SEL) son algoritmos que encuentran la solución exacta del sistema en un número finito de pasos. Estos métodos proporcionan una solución única y no requieren una suposición inicial, los métodos más comunes son:
+
+* Sustitución
+* Reducción
+* Igualación
+* Método de Gauss
+* Método de Gauss - Jordan
+* Regla de Cramer
+* Método de la matriz inversa
+
+Estos métodos son eficientes para sistemas de ecuaciones lineales de tamaño pequeño o moderado y son especialmente útiles cuando se necesita una solución exacta. Sin embargo, la complejidad computacional de estos métodos puede aumentar significativamente con el tamaño del sistema.
+En este caso, optaremos por no enfocarnos en los métodos directos para la resolución de sistemas de ecuaciones lineales. En lugar de eso, dirigiremos nuestra atención hacia los métodos indirectos o iterativos.
+
+## Métodos indirectos
+Los métodos indirectos, también conocidos como métodos iterativos, son técnicas utilizadas para resolver problemas matemáticos mediante la repetición de un proceso de aproximación sucesiva. A diferencia de los métodos directos, que buscan obtener una solución exacta en un número finito de pasos, los métodos iterativos mejoran continuamente la aproximación a la solución mediante la repetición de un conjunto de operaciones.
+En este contexto, centraremos nuestra atención en dos métodos iterativos ampliamente utilizados para resolver sistemas de ecuaciones lineales: el Método de Jacobi y el Método de Gauss-Seidel. 
+
+### Método de Jacobi
+Este método es particularmente útil cuando se trata de sistemas lineales de gran tamaño. Desarrollado por el matemático alemán Carl Gustav Jacob Jacobi, este método aborda la resolución de sistemas de ecuaciones al descomponer la matriz de coeficientes en la suma de una matriz diagonal y dos matrices triangulares. Es decir:
+
+![equation](https://latex.codecogs.com/svg.image?e&space;=&space;\left|&space;\widetilde{p}&space;-&space;p&space;\right|) 
+
+![equation](https://latex.codecogs.com/svg.image?e&space;=&space;\left|&space;\widetilde{p}&space;-&space;p&space;\right|) 
+
+![equation](https://latex.codecogs.com/svg.image?e&space;=&space;\left|&space;\widetilde{p}&space;-&space;p&space;\right|) 
 ## Bibliografía
 - Chapra, S. C., & Canale, R. P. (2010). Métodos numéricos para ingenieros (5a ed.). México: McGrawHill.
