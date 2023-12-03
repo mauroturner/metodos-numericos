@@ -868,5 +868,12 @@ if __name__ == '__main__':
 
 ```
 
+### Método de Gauss - Seidel
+El método de Gauss-Seidel es un algoritmo iterativo utilizado para resolver sistemas de ecuaciones lineales. Este método lleva el nombre de los matemáticos Carl Friedrich Gauss y Philipp Ludwig von Seidel. A diferencia del método de Jacobi, el método de Gauss - Seidel actualiza las soluciones de las ecuaciones en el mismo orden en el que aparecen en el sistema.
+
+La idea principal del método de Gauss-Seidel es realizar actualizaciones sucesivas de las soluciones de las ecuaciones, utilizando los valores más recientes disponibles. En cada iteración, las nuevas soluciones se utilizan de inmediato en las siguientes ecuaciones del sistema, lo que puede conducir a una convergencia más rápida en comparación con el método de Jacobi.
+
+#### Algoritmo
+
 ## Bibliografía
 - Chapra, S. C., & Canale, R. P. (2010). Métodos numéricos para ingenieros (5a ed.). México: McGrawHill.

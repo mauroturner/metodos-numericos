@@ -2,15 +2,17 @@ import numpy as np
 
 def main():
     # Definimos el sistema de ecuaciones
-    A = np.array([[3, -1, -1],
-                  [-1, 3, 1],
-                  [2, 1, 4]])
+    A = np.array([
+        [3, -1, -1],
+        [-1, 3, 1],
+        [2, 1, 4]
+    ])
 
     b = np.array([1, 3, 7])
 
-    # Establecemos el criterio de parada (norma infinito en este caso)
-    def criterio_parada(x, x_prev, tolerancia):
-        return np.linalg.norm(x - x_prev, np.inf) < tolerancia
+    # Establecemos el criterio de parada
+    def cifras_significativas(d):
+        return (1/2) * (10**-d)
 
     def metodo_jacobi(A, b, x0, tolerancia, max_iter):
         n = len(b)
@@ -23,8 +25,8 @@ def main():
                 sigma = np.dot(A[i, :n], x_prev[:n]) + np.dot(A[i, n:], x_prev[n:])
                 x[i] = (b[i] - sigma + A[i, i] * x_prev[i]) / A[i, i]
 
-            # Verificamos el criterio de parada
-            if criterio_parada(x, x_prev, tolerancia):
+            # Verificamos el criterio de parada (Norma infinito vs. cantidad de cifras significativas requeridas)
+            if np.linalg.norm(x - x_prev, np.inf) < tolerancia:
                 return x, iteraciones
 
             x_prev = x.copy()
@@ -35,7 +37,7 @@ def main():
     # Aplicamos el método de Jacobi al sistema de ecuaciones
     x0 = np.zeros_like(b, dtype=float)
     try:
-        solucion, iteraciones = metodo_jacobi(A, b, x0, 0.000001, 100)
+        solucion, iteraciones = metodo_jacobi(A, b, x0, cifras_significativas(8), 100)
         print("Solución encontrada:")
         print(solucion)
         print(f"Iteraciones: {iteraciones}")
