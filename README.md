@@ -211,13 +211,13 @@ El método de iteración de punto fijo implica tomar un valor inicial y aplicar 
 ![equation](https://latex.codecogs.com/svg.image?\left|&space;x_{n}&space;-&space;x^{*}&space;\right|&space;\leq&space;\frac{k^{n}}{1&space;-&space;k}&space;\cdot&space;\left|&space;x_{1}&space;-&space;x_{2}\right|)
 
 
-### Comportamiento
+#### Comportamiento
 En la práctica, si la derivada de g es continua, sucede que:
 - Si: |g’(x)| > 1 entonces los iterados no convergen a x*
 - Si: |g’(x)| < 1 entonces los iterados no convergen linealmente a x*
 - Si: |g’(x)| = 1 entonces los iterados convergen cuadráticamente a x*
 
-### Algoritmo
+#### Algoritmo
 1. Hacer de f(x) = 0 a x = g(x) mediante un desarrollo algebraico. Esta ecuación se puede “acomodar” de varias maneras por lo tanto vamos a tener varios x = g(x).
 2. Derivar las g(x) y evaluar en todas, la semilla. Para obtener una semilla se puede resolver la desigualdad −1 ≤ g′(x) ≤ 1. Analizar la convergencia según la tabla anterior. También se puede analizar el gráfico y ver el cambio de signo de la función
 3. Establecer un criterio de parada
@@ -291,7 +291,7 @@ Esta técnica es una versión mejorada del método del punto fijo y es bastante 
 
 Hablando de manera sencilla, partiendo de una estimación Xn​, para la siguiente aproximación Xn+1​, simplemente seguimos la tangente de la curva hasta que cruza el eje x en el punto (Xn, Xn+1). 
 
-### Algoritmo
+#### Algoritmo
 1. Seleccionar un punto inicial x0​ cerca de la raíz.
 2. En cada iteración, calcula el valor Xn+1 con la fórmula:
 ![equation](https://latex.codecogs.com/svg.image?&space;x_{nueva}=x_{anterior}-\frac{f(x_{anterior})}{f'(x_{anterior})})
@@ -365,7 +365,7 @@ Hay funciones cuyas derivadas son un verdadero dolor de cabeza para calcular, ah
 
 Este método necesita dos valores iniciales de x. Sin embargo, no es necesario que la función f(x) cambie de signo entre esos dos valores. Por eso, no lo llamamos un método cerrado.
 
-### Algoritmo
+#### Algoritmo
 1. Seleccionar dos valores iniciales x0​ y x1​ que estén cerca de la raíz.
 2. Evaluar la función en f(x0) y f(x1)
 3. Calcular la pendiente m con
@@ -434,13 +434,13 @@ Además de los métodos que hemos programado en el repositorio, existen otras do
 - El método de Bairstow
 
 
-## Método de Müller
+### Método de Müller
 El método de Muller es un método numérico que se asemeja al método de la secante, que aproxima una raíz mediante una línea recta trazada entre dos puntos. En el caso del método de Muller, en lugar de utilizar dos puntos, se emplean tres puntos para construir una parábola. 
 La parábola se ajusta de manera que pase por los tres puntos iniciales, y se determinan los coeficientes de la parábola.
 
 <img src="https://i.imgur.com/Rzq3Fy7.jpg" alt="image" style="width:100%;height:100%;">
 
-### Algoritmo
+#### Algoritmo
 1. Evaluar la función en tres puntos cercanos a la raíz 
 2. Calcular los siguientes valores
 
@@ -549,11 +549,11 @@ if __name__ == '__main__':
     main()
 ```
 
-# Método de Bairstow
+### Método de Bairstow
 El Método de Bairstow es un algoritmo iterativo utilizado para encontrar las raíces de polinomios de segundo o mayor grado. Este método es especialmente eficiente para polinomios con coeficientes reales y complejos.
 La idea principal detrás del Método de Bairstow es realizar una factorización cuadrática sucesiva del polinomio original, reduciéndolo gradualmente hasta que se obtengan las raíces finales. Se inicia con una suposición de las raíces y luego se ajustan iterativamente para obtener una mejor aproximación.
 
-### Algoritmo
+#### Algoritmo
 
 1. Se tiene una ecuación de la forma ![equation](https://latex.codecogs.com/svg.image?f_{n}(x)=a_0&plus;a_1x&plus;a_2x^{2}&plus;...&plus;a_nx^n)
 
@@ -782,12 +782,44 @@ Los métodos indirectos, también conocidos como métodos iterativos, son técni
 En este contexto, centraremos nuestra atención en dos métodos iterativos ampliamente utilizados para resolver sistemas de ecuaciones lineales: el Método de Jacobi y el Método de Gauss-Seidel. 
 
 ### Método de Jacobi
-Este método es particularmente útil cuando se trata de sistemas lineales de gran tamaño. Desarrollado por el matemático alemán Carl Gustav Jacob Jacobi, este método aborda la resolución de sistemas de ecuaciones al descomponer la matriz de coeficientes en la suma de una matriz diagonal y dos matrices triangulares. Es decir:
+Este método es particularmente útil cuando se trata de sistemas lineales de gran tamaño. Desarrollado por el matemático alemán Carl Gustav Jacob Jacobi, este método aborda la resolución de sistemas de ecuaciones al descomponer la matriz de coeficientes en la suma de una matriz diagonal y dos matrices triangulares. 
 
-![equation](https://latex.codecogs.com/svg.image?e&space;=&space;\left|&space;\widetilde{p}&space;-&space;p&space;\right|) 
+#### Algoritmo 
+Es decir: la matriz A es la suma de tres matrices: una matriz diagonal D, y dos matrices triangulares L y U. La descomposición se expresa como A = D + L + U, donde:
 
-![equation](https://latex.codecogs.com/svg.image?e&space;=&space;\left|&space;\widetilde{p}&space;-&space;p&space;\right|) 
+* D es la matriz diagonal que contiene los elementos diagonales de A
+* L es la matriz triangular inferior con los elementos fuera de la diagonal de A
+* U es la matriz triangular superior con los elementos fuera de la diagonal de A
 
-![equation](https://latex.codecogs.com/svg.image?e&space;=&space;\left|&space;\widetilde{p}&space;-&space;p&space;\right|) 
+Entonces:
+
+1. Se distribuye x
+
+![equation](https://latex.codecogs.com/svg.image?(L&plus;D&plus;U)\cdot&space;x=b)  
+
+2. Se despeja x y se utiliza por conveniencia a la diagonal
+
+![equation](https://latex.codecogs.com/svg.image?Lx&plus;Dx&plus;Ux=b) 
+
+3. Se multiplica por la inversa de la diagonal
+
+![equation](https://latex.codecogs.com/svg.image?Dx=(-L-U)x&plus;b) 
+
+![equation](https://latex.codecogs.com/svg.image?x=D^{-1}(-L-U)x&plus;D^{-1}&plus;b) 
+
+5. Se renombran las variables
+
+![equation](https://latex.codecogs.com/svg.image?T=D^{-1}(-L-U)) 
+
+![equation](https://latex.codecogs.com/svg.image?C=D^{-1}b) 
+
+6. Por lo tanto
+
+![equation](https://latex.codecogs.com/svg.image?x=Tx&plus;C) 
+
+#### Desarrollo en Python
+```
+```
+
 ## Bibliografía
 - Chapra, S. C., & Canale, R. P. (2010). Métodos numéricos para ingenieros (5a ed.). México: McGrawHill.
