@@ -873,7 +873,83 @@ El método de Gauss-Seidel es un algoritmo iterativo utilizado para resolver sis
 
 La idea principal del método de Gauss-Seidel es realizar actualizaciones sucesivas de las soluciones de las ecuaciones, utilizando los valores más recientes disponibles. En cada iteración, las nuevas soluciones se utilizan de inmediato en las siguientes ecuaciones del sistema, lo que puede conducir a una convergencia más rápida en comparación con el método de Jacobi.
 
+Este método es particularmente eficaz para sistemas en los que la matriz de coeficientes es diagonalmente dominante o simétrica y definida positiva, además de esta forma se garantiza la convergencia. No obstante, el método puede funcionar, aunque no se satisfagan estos criterios.
+
 #### Algoritmo
 
+1. Si los elementos de la diagonal no son todos cero, la primera ecuación se puede resolver para x1, la segunda para x2 y la tercera para x3, para obtener:
+
+![equation](https://latex.codecogs.com/svg.image?x_{1}=\frac{b_{1}-a_{12}x_{2}-a_{13}x_{3}}{a_{11}}) 
+
+![equation](https://latex.codecogs.com/svg.image?x_{2}=\frac{b_{2}-a_{21}x_{1}-a_{23}x_{3}}{a_{22}}) 
+
+![equation](https://latex.codecogs.com/svg.image?x_{3}=\frac{b_{3}-a_{31}x_{1}-a_{32}x_{2}}{a_{33}}) 
+
+2. Se puede empezar el proceso de solución al escoger valores iniciales para las x. Una forma simple para obtener los valores iniciales es suponer que todos son cero, estos se sustituyen en la ecuación:
+
+![equation](https://latex.codecogs.com/svg.image?x_{1}=\frac{b_{1}-a_{12}x_{2}-a_{13}x_{3}}{a_{11}}) 
+
+3. Con el valor obtenido para X1, se sustituye junto con el valor previo cero de x3 en la ecuación
+
+![equation](https://latex.codecogs.com/svg.image?x_{2}=\frac{b_{2}-a_{21}x_{1}-a_{23}x_{3}}{a_{22}}) 
+
+4. Se calcula el nuevo valor de X2, y se repite el proceso con la ecuación para calcular un nuevo valor de X3.
+
+![equation](https://latex.codecogs.com/svg.image?x_{3}=\frac{b_{3}-a_{31}x_{1}-a_{32}x_{2}}{a_{33}}) 
+
+5. Luego se regresa a la primera ecuación y se repite  todo el procedimiento hasta que la solución converja suficientemente cerca a los valores verdaderos.
+
+#### Desarrollo en Python
+```python
+import numpy as np
+
+def main():
+    # Definimos el sistema de ecuaciones
+    A = np.array([
+        [9, 2, -1],
+        [7, 8, 5],
+        [3, 4, -10]
+    ])
+
+    b = np.array([-2, 3, 6])
+
+    # Establecemos el criterio de parada
+    def cifras_significativas(d):
+        return (1/2) * (10**-d)
+
+    def gauss_seidel(A, b, x0, tolerancia, max_iter):
+        n = len(b)
+        x = x0.copy()
+        iteraciones = 0
+
+        while iteraciones < max_iter:
+            x_prev = x.copy()
+
+            for i in range(n):
+                suma1 = np.dot(A[i, :i], x[:i])
+                suma2 = np.dot(A[i, i + 1:], x_prev[i + 1:])
+                x[i] = (b[i] - suma1 - suma2) / A[i, i]
+
+            # Verificamos el criterio de parada (Norma infinito vs. cantidad de cifras significativas requeridas)
+            if np.linalg.norm(x - x_prev, np.inf) < tolerancia:
+                return x, iteraciones
+
+            iteraciones += 1
+
+        raise ValueError("El método no converge en el número máximo de iteraciones.")
+
+    # Aplicamos el método de Gauss-Seidel al sistema de ecuaciones
+    x0 = np.zeros_like(b, dtype=float)
+    try:
+        solucion, iteraciones = gauss_seidel(A, b, x0, cifras_significativas(5), 100)
+        print("Solución encontrada:")
+        print(solucion)
+        print(f"Iteraciones: {iteraciones}")
+    except ValueError as e:
+        print(e)
+
+if __name__ == '__main__':
+    main()
+```
 ## Bibliografía
 - Chapra, S. C., & Canale, R. P. (2010). Métodos numéricos para ingenieros (5a ed.). México: McGrawHill.
