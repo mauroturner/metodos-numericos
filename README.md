@@ -997,5 +997,37 @@ if __name__ == '__main__':
     main()
 ```
 
+### Regla de Simpson
+Esta regla se deduce a partir de la resolución de la integral aplicada sobre el polinomio de segundo grado de Lagrange
+
+![equation](https://latex.codecogs.com/svg.image?\int_{a}^{b}f(x)d(x)=\frac{h}{3}\cdot(f(x_{0})&plus;4\cdot&space;f(x_{1})&plus;f(x_{2}))-\frac{h^{5}}{90}f^{(4)}(\varepsilon))
+
+#### Desarrollo en Python
+```python
+import numpy as np
+
+def main():
+    # Definimos la función a integrar
+    def f(x):
+        return 1 + np.exp(1) ** -x * np.sin(4*x)
+
+    # Definimos los límites de integración
+    a = 0
+    b = 1
+
+    # Aplicamos la regla de Simpson para calcular la integral
+    integral = regla_de_Simpson(f, a, b)
+    print("Valor aproximado de la integral:", integral)
+
+def regla_de_Simpson(f, a, b):
+    h = (b - a) / 2
+    c = (a + b) / 2
+    integral = (h / 3) * (f(a) + 4 * f(c) + f(b))
+    return integral
+
+if __name__ == '__main__':
+    main()
+```
+
 ## Bibliografía
 - Chapra, S. C., & Canale, R. P. (2010). Métodos numéricos para ingenieros (5a ed.). México: McGrawHill.
