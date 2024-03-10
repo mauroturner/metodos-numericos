@@ -1029,5 +1029,38 @@ if __name__ == '__main__':
     main()
 ```
 
+### Regla de Simpson 3/8
+Esta regla se deduce a partir de la resolución de la integral aplicada sobre el polinomio de tercer grado de Lagrange
+
+![equation](https://latex.codecogs.com/svg.image?\int_{a}^{b}f(x)d(x)=\frac{3h}{8}\cdot(f(x_{0})&plus;3\cdot&space;f(x_{1})&plus;3\cdot&space;f(x_{2})&plus;f(x_{3}))-\frac{3h^5}{80}f^{(6)}(\xi))
+
+#### Desarrollo en Python
+```python
+import numpy as np
+
+def main():
+    # Definimos la función a integrar
+    def f(x):
+        return 1 + np.exp(1) ** -x * np.sin(4*x)
+
+    # Definimos los límites de integración
+    a = 0
+    b = 1
+
+    # Aplicamos la regla 3/8 de Simpson para calcular la integral
+    integral = regla_38_Simpson(f, a, b)
+    print("Valor aproximado de la integral:", integral)
+
+def regla_38_Simpson(f, a, b):
+    h = (b - a) / 3
+    c = (2*a + b) / 3
+    d = (a + 2*b) / 3
+    integral = (3 * h / 8) * (f(a) + 3 * f(c) + 3 * f(d) + f(b))
+    return integral
+
+if __name__ == '__main__':
+    main()
+```
+
 ## Bibliografía
 - Chapra, S. C., & Canale, R. P. (2010). Métodos numéricos para ingenieros (5a ed.). México: McGrawHill.
