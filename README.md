@@ -951,5 +951,51 @@ def main():
 if __name__ == '__main__':
     main()
 ```
+
+## Integración numérica
+
+La integración numérica es una herramienta que se utiliza para obtener valores aproximados de integrales definidas que no pueden calcularse analíticamente. El objetivo es aproximar la integral definida de una función 𝑓(x) en un intervalo [a, b] evaluando 𝑓(x) en un número finito de puntos.
+
+### Cuadratura numérica
+En esta sección se estudian técnicas para la aproximación de integrales cuyas primitivas no siempre pueden calcularse aplicando el teorema fundamental del cálculo, especialmente sobre funciones que no tienen primitiva elemental. El método básico para resolver este tipo de integrales se conoce como cuadratura numérica.
+
+![equation](https://latex.codecogs.com/svg.image?\int_{a}^{b}f(x)d(x)=\sum_{i=1}^{n}w_{i}\cdot&space;f(x_{i})&plus;E(f^{(n)}))
+
+<img src="https://i.imgur.com/3qqYMUc.png" alt="image" style="width:200px;height:200px;">
+
+### Fórmula de Newton - Cotes
+Las fórmulas de Newton-Cotes son los tipos de integración numérica más comunes. Se basan en la estrategia de reemplazar una función complicada o datos tabulados por un polinomio de interpolación que es fácil de integrar.
+
+### Regla del trapecio
+Esta regla se deduce a partir de la resolución de la integral aplicada sobre el polinomio de grado uno de Lagrange
+
+![equation](https://latex.codecogs.com/svg.image?\int_{a}^{b}f(x)d(x)=\frac{h}{2}\cdot(f(x_{0})&plus;f(x_{1}))-\frac{h^{3}}{12}f''(\varepsilon))
+
+#### Desarrollo en Python
+```python
+import numpy as np
+
+def main():
+    # Definimos la función a integrar
+    def f(x):
+        return 1 + np.exp(1) ** -x * np.sin(4*x)
+
+    # Definimos los límites de integración
+    a = 0
+    b = 1
+
+    # Aplicamos la regla del trapecio para calcular la integral
+    integral = regla_del_trapecio(f, a, b)
+    print("Valor aproximado de la integral: ", integral)
+
+def regla_del_trapecio(f, a, b):
+    h = (b - a) / 2
+    integral = h * (f(a) + f(b)) 
+    return integral
+
+if __name__ == '__main__':
+    main()
+```
+
 ## Bibliografía
 - Chapra, S. C., & Canale, R. P. (2010). Métodos numéricos para ingenieros (5a ed.). México: McGrawHill.
