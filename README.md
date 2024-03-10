@@ -1062,5 +1062,40 @@ if __name__ == '__main__':
     main()
 ```
 
+### Regla de Boole
+Esta regla se deduce a partir de la resolución de la integral aplicada sobre el polinomio de cuarto grado de Lagrange
+
+![equation](https://latex.codecogs.com/svg.image?\int_{a}^{b}f(x)d(x)=\frac{2h}{45}\cdot(7\cdot&space;f(x_{0})&plus;32\cdot&space;f(x_{1})&plus;12\cdot&space;f(x_{2})&plus;32\cdot&space;f(x_{3})&plus;7\cdot&space;f(x_{4}))-\frac{8h^5}{945}f^{(6)}(\xi))
+
+#### Desarrollo en Python
+```python
+import numpy as np
+
+def main():
+    # Definimos la función a integrar
+    def f(x):
+        return 1 + np.exp(1) ** -x * np.sin(4*x)
+
+    # Definimos los límites de integración
+    a = 0
+    b = 1
+
+    # Aplicamos la regla de Boole para calcular la integral
+    integral = regla_de_Boole(f, a, b)
+    print("Valor aproximado de la integral:", integral)
+
+def regla_de_Boole(f, a, b):
+    h = (b - a) / 4
+    c = a + h
+    d = a + 2 * h
+    e = a + 3 * h
+    integral = (2 * h / 45) * (7 * f(a) + 32 * f(c) + 12 * f(d) + 32 * f(e) + 7 * f(b))
+    return integral
+
+if __name__ == '__main__':
+    main()
+```
+
+
 ## Bibliografía
 - Chapra, S. C., & Canale, R. P. (2010). Métodos numéricos para ingenieros (5a ed.). México: McGrawHill.
